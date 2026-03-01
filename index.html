@@ -96,7 +96,7 @@
     .stage{
       position:relative;
       z-index:1;
-      padding:18px 14px 16px;
+      padding:18px 14px 18px;
       display:flex;
       flex-direction:column;
       align-items:center;
@@ -113,7 +113,7 @@
 
     /* Wheel */
     .wheelWrap{
-      width:min(540px, 88vw);
+      width:min(560px, 92vw);
       aspect-ratio:1/1;
       position:relative;
       display:grid;
@@ -139,8 +139,8 @@
 
     .wheel{
       position:relative;
-      width: calc(100% - 76px);
-      height: calc(100% - 76px);
+      width: calc(100% - 78px);
+      height: calc(100% - 78px);
       border-radius:50%;
       background:
         conic-gradient(
@@ -157,8 +157,6 @@
       transition: transform 3.0s cubic-bezier(.12,.86,.16,1);
       overflow:hidden;
     }
-
-    /* subtle slice dividers */
     .wheel:after{
       content:"";
       position:absolute; inset:0;
@@ -177,20 +175,27 @@
       pointer-events:none;
     }
 
-    /* Horizontal labels (NOT rotated) */
+    /* Labels (correct position, horizontal, near rim) */
     .labels{
       position:absolute;
-      width: calc(100% - 76px);
-      height: calc(100% - 76px);
+      width: calc(100% - 78px);
+      height: calc(100% - 78px);
       border-radius:50%;
       pointer-events:none;
+      z-index:4;
+      /* radius of labels from center */
+      --rad: 36%;
     }
 
     .label{
       position:absolute;
       left:50%; top:50%;
-      width: min(78%, 320px);
-      transform: translate(-50%,-50%);
+      width: min(84%, 360px);
+      transform:
+        translate(-50%,-50%)
+        rotate(var(--ang))
+        translate(0, calc(-1 * var(--rad)))
+        rotate(calc(-1 * var(--ang)));
       display:flex;
       justify-content:center;
       text-align:center;
@@ -200,24 +205,16 @@
       border-radius: 999px;
       border: 2px solid rgba(10,31,68,.10);
       box-shadow: 0 10px 18px rgba(10,31,68,.10);
-      backdrop-filter: blur(2px);
       line-height:1.05;
-      font-size: clamp(14px, 3.7vw, 20px);
+      font-size: clamp(13px, 3.4vw, 18px);
     }
 
-    /* positions around the wheel (at the middle of each slice) */
-    .p0{ transform: translate(-50%,-50%) translate(0,-36%); }
-    .p1{ transform: translate(-50%,-50%) translate(31%,-18%); }
-    .p2{ transform: translate(-50%,-50%) translate(31%,18%); }
-    .p3{ transform: translate(-50%,-50%) translate(0,36%); }
-    .p4{ transform: translate(-50%,-50%) translate(-31%,18%); }
-    .p5{ transform: translate(-50%,-50%) translate(-31%,-18%); }
+    /* readable backgrounds per slice */
+    .label.b{ background: rgba(255,255,255,.14); color:#fff; border-color: rgba(255,255,255,.22); }
+    .label.y{ background: rgba(255,255,255,.54); color: var(--blue2); }
+    .label.g{ background: rgba(11,79,182,.10); color: var(--blue2); }
 
-    /* label styles per slice */
-    .b{ background: rgba(255,255,255,.16); color:#fff; border-color: rgba(255,255,255,.22); }
-    .y{ background: rgba(255,255,255,.46); color: var(--blue2); }
-    .g{ background: rgba(11,79,182,.10); color: var(--blue2); }
-
+    /* Center spin button */
     .centerBtn{
       position:absolute;
       width: 170px; height: 170px;
@@ -299,17 +296,34 @@
     }
     .btn:disabled{ opacity:.55; cursor:not-allowed; }
 
-    /* Ticket result */
+    /* MODAL result */
+    .modal{
+      position:fixed; inset:0;
+      display:none;
+      align-items:center;
+      justify-content:center;
+      padding:18px 12px;
+      z-index:9000;
+      background: rgba(5,15,35,.45);
+      backdrop-filter: blur(2px);
+    }
+    .modal.open{ display:flex; }
+
     .ticket{
       width: min(560px, 92vw);
       background: linear-gradient(180deg, rgba(255,255,255,.92), rgba(255,255,255,.98));
       border-radius: 18px;
       border: 2px dashed rgba(11,79,182,.28);
-      box-shadow: 0 14px 26px rgba(10,31,68,.12);
+      box-shadow: 0 18px 36px rgba(10,31,68,.22);
       padding: 14px 14px 12px;
-      display:none;
       position:relative;
       overflow:hidden;
+      transform: translateY(10px) scale(.98);
+      opacity:0;
+      animation: pop .22s ease forwards;
+    }
+    @keyframes pop{
+      to{ transform: translateY(0) scale(1); opacity:1; }
     }
     .ticket:before{
       content:"";
@@ -356,6 +370,14 @@
       font-weight:800;
       position:relative; z-index:1;
     }
+    .modalBtns{
+      display:flex;
+      justify-content:flex-end;
+      gap:10px;
+      margin-top:12px;
+      position:relative; z-index:1;
+      flex-wrap:wrap;
+    }
 
     /* Confetti */
     .confetti{
@@ -395,16 +417,16 @@
 
         <div class="wheelWrap">
           <div class="outerRing" aria-hidden="true"></div>
-
           <div class="wheel" id="wheel"></div>
 
           <div class="labels" aria-hidden="true">
-            <div class="label b p0">10% Dcto. Muebles y Ropa</div>
-            <div class="label g p1">10% Dcto. Óptica</div>
-            <div class="label y p2">10% Dcto. Muebles y Ropa</div>
-            <div class="label b p3">¡Doble oportunidad!</div>
-            <div class="label y p4">10% Dcto. en tu próxima visita</div>
-            <div class="label g p5">10% Dcto. Óptica</div>
+            <!-- angles are the CENTER of each slice: 30, 90, 150, 210, 270, 330 -->
+            <div class="label b" style="--ang:30deg">10% Dcto. Muebles y Ropa</div>
+            <div class="label g" style="--ang:90deg">10% Dcto. Óptica</div>
+            <div class="label y" style="--ang:150deg">10% Dcto. Muebles y Ropa</div>
+            <div class="label b" style="--ang:210deg">¡Doble oportunidad!</div>
+            <div class="label y" style="--ang:270deg">10% Dcto. en tu próxima visita</div>
+            <div class="label g" style="--ang:330deg">10% Dcto. Óptica</div>
           </div>
 
           <div class="centerBtn" id="centerSpin" role="button" aria-label="Girar ruleta">
@@ -422,15 +444,22 @@
           <button class="btn primary" id="spinBtn">Girar Ruleta</button>
           <button class="btn ghost" id="resetBtn">Reiniciar</button>
         </div>
+      </div>
+    </div>
+  </div>
 
-        <div class="ticket" id="ticket">
-          <div class="ticketTop">
-            <div class="tag"><b>RESULTADO</b> Beneficio asignado</div>
-            <div class="ok">¡Felicidades!</div>
-          </div>
-          <div class="prize" id="prizeText">—</div>
-          <div class="fine">Presenta este beneficio en caja conforme a la dinámica.</div>
-        </div>
+  <!-- Modal result -->
+  <div class="modal" id="modal">
+    <div class="ticket" role="dialog" aria-modal="true" aria-label="Resultado">
+      <div class="ticketTop">
+        <div class="tag"><b>RESULTADO</b> Beneficio asignado</div>
+        <div class="ok">¡Felicidades!</div>
+      </div>
+      <div class="prize" id="prizeText">—</div>
+      <div class="fine">Presenta este beneficio en caja conforme a la dinámica.</div>
+      <div class="modalBtns">
+        <button class="btn ghost" id="closeModal">Cerrar</button>
+        <button class="btn primary" id="spinAgain">Girar otra vez</button>
       </div>
     </div>
   </div>
@@ -451,12 +480,16 @@
     const spinBtn = document.getElementById("spinBtn");
     const resetBtn = document.getElementById("resetBtn");
     const centerSpin = document.getElementById("centerSpin");
-    const ticket = document.getElementById("ticket");
+
+    const modal = document.getElementById("modal");
+    const closeModal = document.getElementById("closeModal");
+    const spinAgain = document.getElementById("spinAgain");
     const prizeText = document.getElementById("prizeText");
+
     const confetti = document.getElementById("confetti");
 
     let spinning = false;
-    let rotation = 0; // grados acumulados
+    let rotation = 0;
 
     function doConfetti(){
       confetti.innerHTML = "";
@@ -480,22 +513,26 @@
       setTimeout(()=>{ confetti.style.display="none"; }, 1400);
     }
 
+    function openModal(text){
+      prizeText.textContent = text;
+      modal.classList.add("open");
+      doConfetti();
+    }
+    function closeModalFn(){
+      modal.classList.remove("open");
+    }
+
     function spin(){
       if(spinning) return;
       spinning = true;
-      ticket.style.display = "none";
       spinBtn.disabled = true;
+      closeModalFn();
 
       const idx = Math.floor(Math.random() * prizes.length); // 0..5
-      const slice = 60; // grados
-      const centerAngle = idx * slice + (slice/2); // ej 30,90,150...
-
-      // Queremos que el centro del premio caiga en el puntero de arriba (0deg).
-      // En CSS: rotate(+R) => un punto a grados a pasa a a+R.
-      // Queremos: centerAngle + R ≡ 0 (mod 360) => R ≡ 360 - centerAngle.
+      const slice = 60;
+      const centerAngle = idx * slice + (slice/2); // 30, 90, ...
       const desired = 360 - centerAngle;
 
-      // Ajuste para partir desde el ángulo actual (mod 360)
       const currentMod = ((rotation % 360) + 360) % 360;
       let delta = (desired - currentMod);
       delta = ((delta % 360) + 360) % 360;
@@ -505,11 +542,8 @@
 
       wheel.style.setProperty("--rot", rotation + "deg");
 
-      // Mostrar resultado al final de la animación
       setTimeout(()=>{
-        prizeText.textContent = prizes[idx];
-        ticket.style.display = "block";
-        doConfetti();
+        openModal(prizes[idx]);
         spinning = false;
         spinBtn.disabled = false;
       }, 3050);
@@ -518,14 +552,24 @@
     function reset(){
       rotation = 0;
       wheel.style.setProperty("--rot", "0deg");
-      ticket.style.display = "none";
+      closeModalFn();
     }
 
     spinBtn.addEventListener("click", spin);
     centerSpin.addEventListener("click", spin);
     resetBtn.addEventListener("click", reset);
 
-    // Tip: primer render
+    closeModal.addEventListener("click", closeModalFn);
+    spinAgain.addEventListener("click", ()=>{
+      closeModalFn();
+      spin();
+    });
+
+    // click outside ticket closes
+    modal.addEventListener("click", (e)=>{
+      if(e.target === modal) closeModalFn();
+    });
+
     wheel.style.setProperty("--rot", "0deg");
   </script>
 </body>
