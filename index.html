@@ -1,273 +1,170 @@
-<!doctype html>
+<!DOCTYPE html>
 <html lang="es">
 <head>
-<meta charset="utf-8" />
-<meta name="viewport" content="width=device-width,initial-scale=1" />
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Ruleta - Tu confianza se recompensa</title>
 
 <style>
 :root{
   --coppel-blue:#0B4FB6;
-  --coppel-blue2:#0A3F93;
   --coppel-yellow:#FFD400;
-  --soft-white:#F5F6FA;
-  --text:#0B1B3A;
 }
-
-*{box-sizing:border-box}
 
 body{
   margin:0;
-  font-family: system-ui, -apple-system, Segoe UI, Roboto, Arial, sans-serif;
-  background: linear-gradient(180deg, #ffffff 0%, #f2f5ff 60%, #ffffff 100%);
-  color:var(--text);
+  background:#f4f6fb;
+  font-family:Arial, Helvetica, sans-serif;
   display:flex;
+  justify-content:center;
+  align-items:center;
   min-height:100vh;
-  align-items:center;
-  justify-content:center;
-  padding:18px 12px;
 }
 
-.wrap{
-  width:min(560px, 98vw);
-  display:flex;
-  flex-direction:column;
-  align-items:center;
-  gap:12px;
-}
-
-.ribbon{
-  width:100%;
-  padding:16px;
-  border-radius:18px;
-  background: linear-gradient(180deg, var(--coppel-blue) 0%, var(--coppel-blue2) 100%);
-  color:#fff;
+.container{
   text-align:center;
-  box-shadow: 0 10px 30px rgba(11,79,182,.25);
-}
-
-.ribbon h1{
-  margin:0 0 12px 0;
-  font-weight:1000;
-  text-transform:uppercase;
-  font-size: clamp(20px, 4.6vw, 30px);
-  line-height:1.2;
-}
-
-/* Logo */
-.brand{
-  display:flex;
-  justify-content:center;
-  align-items:center;
-}
-
-.brand img{
-  width:120px;
-  height:auto;
-  background:#fff;
-  padding:8px;
-  border-radius:12px;
-  box-shadow:0 8px 20px rgba(0,0,0,.15);
-}
-
-/* Card */
-.card{
   width:100%;
-  border-radius:22px;
-  padding:14px 12px 16px;
-  background:#ffffff;
-  box-shadow: 0 12px 40px rgba(10,35,90,.15);
-  display:flex;
-  flex-direction:column;
-  align-items:center;
-  gap:10px;
+  max-width:600px;
 }
 
-.wheel-area{
+h1{
+  color:var(--coppel-blue);
+  font-size:22px;
+  margin-bottom:20px;
+}
+
+.wheel-wrapper{
   position:relative;
-  width:min(540px, 96vw);
-  aspect-ratio:1/1;
-  display:grid;
-  place-items:center;
+  width:100%;
+  max-width:520px;
+  margin:auto;
 }
 
-canvas#wheel{
+canvas{
   width:100%;
-  height:100%;
-  border-radius:999px;
-  background:#ffffff;
-  border:8px solid #0B4FB6;
-  box-shadow: 0 18px 40px rgba(10,35,90,.18);
+  height:auto;
 }
 
 .pointer{
-  position:absolute;
-  top:-6px;
-  width:0;height:0;
-  border-left:18px solid transparent;
-  border-right:18px solid transparent;
-  border-top:34px solid var(--coppel-yellow);
+  width:0;
+  height:0;
+  border-left:15px solid transparent;
+  border-right:15px solid transparent;
+  border-top:25px solid var(--coppel-blue);
+  margin:auto;
 }
 
-.center{
-  position:absolute;
-  width:40%;
-  aspect-ratio:1/1;
-  border-radius:999px;
-  background: var(--coppel-yellow);
-  border:8px solid #0B4FB6;
-  display:grid;
-  place-items:center;
-  box-shadow: 0 14px 30px rgba(0,0,0,.18);
-}
-
-.center button{
-  border:0;
-  background:transparent;
-  width:100%;
-  height:100%;
+button{
+  margin-top:25px;
+  padding:14px 25px;
+  font-size:16px;
+  border:none;
+  background:var(--coppel-yellow);
+  color:#000;
+  font-weight:bold;
+  border-radius:6px;
   cursor:pointer;
-  font-weight:1000;
-  color:#0A2B6D;
-  text-transform:uppercase;
-  font-size: clamp(18px, 4.6vw, 28px);
 }
 
-.overlay{
-  position:absolute;
-  inset:0;
-  display:none;
-  align-items:center;
-  justify-content:center;
-  background: rgba(6,18,45,.35);
-  backdrop-filter: blur(2px);
-}
-
-.overlay.show{ display:flex; }
-
-.modal{
-  width:min(420px, 92%);
-  border-radius:22px;
-  background:#fff;
-  padding:18px;
-  text-align:center;
-  box-shadow:0 18px 50px rgba(0,0,0,.22);
-}
-
-.modal h2{
-  margin:10px 0;
-  font-size: clamp(20px, 4.8vw, 28px);
-  color:#0A2B6D;
-  font-weight:1000;
-}
-
-.btn{
-  border:1px solid rgba(11,79,182,.25);
-  background: var(--coppel-blue);
-  color:#fff;
-  padding:10px 14px;
-  border-radius:14px;
-  cursor:pointer;
-  font-weight:900;
-  margin-top:12px;
+button:hover{
+  opacity:0.9;
 }
 </style>
 </head>
 
 <body>
 
-<div class="wrap">
+<div class="container">
+  <h1>Tu confianza se recompensa, gira y aprovecha.</h1>
 
-<div class="ribbon">
-  <h1>Tu confianza se recompensa.<br>Gira y aprovecha.</h1>
-  <div class="brand">
-    <img src="Coppel.png" alt="Logo Coppel">
+  <div class="pointer"></div>
+
+  <div class="wheel-wrapper">
+    <canvas id="wheel" width="500" height="500"></canvas>
   </div>
-</div>
 
-<div class="card">
-  <div class="wheel-area">
-    <div class="pointer"></div>
-    <canvas id="wheel" width="1000" height="1000"></canvas>
-
-    <div class="center">
-      <button onclick="spin()">¡Gira aquí!</button>
-    </div>
-
-    <div class="overlay" id="overlay">
-      <div class="modal">
-        <h2 id="result"></h2>
-        <button class="btn" onclick="closeOverlay()">Cerrar</button>
-      </div>
-    </div>
-
-  </div>
-</div>
-
+  <button onclick="spin()">Girar Ruleta</button>
 </div>
 
 <script>
-const prizes = [
-"10% Dcto. Ropa y/o Muebles",
-"10% Dcto. Óptica",
-"10% Dcto. Próx. visita",
-"10% Dcto. Ropa y/o Muebles",
-"10% Dcto. Óptica",
-"Doble oportunidad"
+const options = [
+  "10% descuento en Ropa",
+  "10% descuento en Muebles",
+  "10% descuento en Óptica",
+  "10% en próxima visita",
+  "Doble oportunidad",
+  "10% descuento en Ropa"
 ];
 
-const colors = ["#0B4FB6","#FFD400","#F5F6FA","#0B4FB6","#FFD400","#F5F6FA"];
+const colors = [
+  "#0B4FB6",
+  "#FFD400",
+  "#0B4FB6",
+  "#FFD400",
+  "#0B4FB6",
+  "#FFD400"
+];
 
 const canvas = document.getElementById("wheel");
 const ctx = canvas.getContext("2d");
 
-const segments = prizes.length;
-const angle = (2*Math.PI)/segments;
+const centerX = canvas.width / 2;
+const centerY = canvas.height / 2;
+const radius = canvas.width / 2;
 
-function drawWheel(rotation=0){
-ctx.clearRect(0,0,canvas.width,canvas.height);
-for(let i=0;i<segments;i++){
-ctx.beginPath();
-ctx.moveTo(500,500);
-ctx.arc(500,500,450,i*angle+rotation,(i+1)*angle+rotation);
-ctx.fillStyle=colors[i];
-ctx.fill();
-ctx.save();
-ctx.translate(500,500);
-ctx.rotate(i*angle+angle/2+rotation);
-ctx.textAlign="right";
-ctx.fillStyle=colors[i]==="#0B4FB6"?"#fff":"#000";
-ctx.font="bold 28px Arial";
-ctx.fillText(prizes[i],400,10);
-ctx.restore();
+function drawWheel(rotation = 0){
+  const arc = (2 * Math.PI) / options.length;
+
+  for(let i = 0; i < options.length; i++){
+    const angle = i * arc + rotation;
+
+    ctx.beginPath();
+    ctx.moveTo(centerX, centerY);
+    ctx.arc(centerX, centerY, radius, angle, angle + arc);
+    ctx.fillStyle = colors[i];
+    ctx.fill();
+    ctx.save();
+
+    ctx.translate(centerX, centerY);
+    ctx.rotate(angle + arc / 2);
+    ctx.textAlign = "right";
+    ctx.fillStyle = colors[i] === "#FFD400" ? "#000" : "#fff";
+    ctx.font = "bold 14px Arial";
+    ctx.fillText(options[i], radius - 15, 5);
+    ctx.restore();
+  }
 }
+
+let rotation = 0;
+let spinning = false;
+
+function spin(){
+  if(spinning) return;
+  spinning = true;
+
+  const spinAngle = Math.random() * 2000 + 2000;
+  const duration = 3000;
+  const start = performance.now();
+
+  function animate(time){
+    const progress = time - start;
+    const ease = 1 - Math.pow(1 - progress / duration, 3);
+    rotation = (spinAngle * ease) * Math.PI / 180;
+
+    ctx.clearRect(0,0,canvas.width,canvas.height);
+    drawWheel(rotation);
+
+    if(progress < duration){
+      requestAnimationFrame(animate);
+    } else {
+      spinning = false;
+    }
+  }
+
+  requestAnimationFrame(animate);
 }
 
 drawWheel();
-
-let rotation=0;
-
-function spin(){
-const spinAngle=Math.random()*2000+3000;
-const start=performance.now();
-function animate(now){
-let progress=now-start;
-if(progress<3000){
-rotation+=0.1;
-drawWheel(rotation);
-requestAnimationFrame(animate);
-}else{
-let index=Math.floor(Math.random()*prizes.length);
-document.getElementById("result").innerText=prizes[index];
-document.getElementById("overlay").classList.add("show");
-}
-}
-requestAnimationFrame(animate);
-}
-
-function closeOverlay(){
-document.getElementById("overlay").classList.remove("show");
-}
 </script>
 
 </body>
