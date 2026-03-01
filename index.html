@@ -3,7 +3,7 @@
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width,initial-scale=1" />
-  <title>Ruleta - Gira y Elige Tu Beneficio</title>
+  <title>Ruleta - Tu confianza se recompensa</title>
   <style>
     :root{
       --coppel-blue:#0B4FB6;
@@ -44,10 +44,10 @@
     }
     .ribbon h1{
       margin:0;
-      letter-spacing:.5px;
-      font-weight:900;
+      letter-spacing:.3px;
+      font-weight:1000;
       text-transform:uppercase;
-      font-size: clamp(20px, 4.5vw, 30px);
+      font-size: clamp(20px, 4.6vw, 30px);
       line-height:1.05;
     }
     .brand{
@@ -86,7 +86,6 @@
       overflow:hidden;
     }
 
-    /* MÁS GRANDE EN PANTALLA */
     .wheel-area{
       position:relative;
       width:min(540px, 96vw);
@@ -124,7 +123,6 @@
       z-index:10;
     }
 
-    /* BOTÓN CENTRAL un poquito más chico para que visualmente se vea más “abierta” */
     .center{
       position:absolute;
       width:40%;
@@ -254,7 +252,7 @@
 <body>
   <div class="wrap">
     <div class="ribbon">
-      <h1>Gira y Elige tu Beneficio</h1>
+      <h1>Tu confianza se recompensa.<br/>Gira y aprovecha.</h1>
       <div class="brand" aria-label="Coppel">
         <img src="logo-coppel.png" alt="Logo Coppel" />
         Coppel
@@ -265,7 +263,6 @@
       <div class="wheel-area">
         <div class="pointer" aria-hidden="true"></div>
 
-        <!-- MÁS RESOLUCIÓN -->
         <canvas id="wheel" width="1400" height="1400" aria-label="Ruleta"></canvas>
         <canvas id="confetti"></canvas>
 
@@ -298,7 +295,6 @@
 
 <script>
 (() => {
-  // 6 segmentos
   const prizes = [
     { label: "10% Dcto. Ropa y/o Muebles", kind: "desc_rm" },
     { label: "10% Dcto. Óptica", kind: "desc_opt" },
@@ -329,8 +325,6 @@
 
   const W = wheel.width, H = wheel.height;
   const cx = W/2, cy = H/2;
-
-  // RUEDA más grande dentro del canvas
   const radius = Math.min(W,H) * 0.46;
 
   const segCount = prizes.length;
@@ -347,10 +341,9 @@
   }
   window.addEventListener("resize", resizeConfetti);
 
-  // ---- TEXT HELPERS (wrap por palabras + ajuste ancho/alto) ----
   function wrapWordsToLines(text, font, maxWidth, maxLines){
     ctx.font = font;
-    const forced = text.split("\n"); // por si algún día quieres forzar líneas
+    const forced = text.split("\n");
     let lines = [];
 
     for(const chunk of forced){
@@ -373,15 +366,14 @@
       if(lines.length >= maxLines) break;
     }
 
-    // si sobran, corta
     if(lines.length > maxLines) lines = lines.slice(0, maxLines);
     return lines;
   }
 
-  function fitTextLines(text, maxWidth, maxHeight, maxLines, baseColorIsDark){
+  function fitTextLines(text, maxWidth, maxHeight, maxLines){
     const fontFamily = "system-ui, -apple-system, Segoe UI, Roboto, Arial";
-    let fontSize = 44;        // arranca moderado
-    const minFontSize = 18;   // baja más para asegurar que quepa
+    let fontSize = 44;
+    const minFontSize = 18;
 
     while(fontSize >= minFontSize){
       const font = `900 ${fontSize}px ${fontFamily}`;
@@ -390,21 +382,19 @@
       const lineH = Math.round(fontSize * 1.08);
       const totalH = lineH * lines.length;
 
-      // Revisión de ancho real (por seguridad)
       ctx.font = font;
       const widest = Math.max(...lines.map(l => ctx.measureText(l).width), 0);
 
       if(widest <= maxWidth && totalH <= maxHeight){
-        return { lines, fontSize, lineH, font };
+        return { lines, lineH, font };
       }
       fontSize -= 2;
     }
 
-    // fallback extremo
     const font = `900 ${minFontSize}px ${fontFamily}`;
     const lines = wrapWordsToLines(text, font, maxWidth, maxLines);
     const lineH = Math.round(minFontSize * 1.08);
-    return { lines, fontSize:minFontSize, lineH, font };
+    return { lines, lineH, font };
   }
 
   function drawWheel(){
@@ -418,7 +408,6 @@
       const start = i*segAngle;
       const end = start + segAngle;
 
-      // segmento
       ctx.beginPath();
       ctx.moveTo(0,0);
       ctx.arc(0,0, radius, start, end);
@@ -426,12 +415,10 @@
       ctx.fillStyle = palette[i % palette.length];
       ctx.fill();
 
-      // divisiones
       ctx.strokeStyle = "rgba(10,35,90,0.20)";
       ctx.lineWidth = 6;
       ctx.stroke();
 
-      // TEXTO
       const mid = (start + end) / 2;
       ctx.save();
       ctx.rotate(mid);
@@ -442,16 +429,13 @@
       ctx.textAlign = "center";
       ctx.textBaseline = "middle";
 
-      // posición del texto: más afuera (más ancho de arco)
       const tx = radius * 0.83;
 
-      // ancho/alto disponibles (aprox) — más generosos
       const maxTextWidth  = radius * 0.78;
       const maxTextHeight = radius * 0.24;
       const maxLines = 4;
 
-      const fitted = fitTextLines(prizes[i].label, maxTextWidth, maxTextHeight, maxLines, isDark);
-
+      const fitted = fitTextLines(prizes[i].label, maxTextWidth, maxTextHeight, maxLines);
       ctx.font = fitted.font;
 
       const totalH = fitted.lineH * fitted.lines.length;
@@ -466,7 +450,6 @@
 
     ctx.restore();
 
-    // anillo interior
     ctx.save();
     ctx.translate(cx, cy);
     ctx.beginPath();
@@ -566,7 +549,6 @@
     }
   }
 
-  // Confetti
   let confettiPieces = [];
   let confettiRaf = null;
 
@@ -628,11 +610,8 @@
     tick();
   }
 
-  function closeOverlay(){
-    overlay.classList.remove("show");
-  }
+  function closeOverlay(){ overlay.classList.remove("show"); }
 
-  // Events
   spinBtn.addEventListener("click", spin);
   spinBtn.addEventListener("touchstart", (e) => { e.preventDefault(); spin(); }, { passive:false });
 
@@ -648,7 +627,6 @@
   spinAgainBtn.addEventListener("click", spin);
   spinAgainBtn.addEventListener("touchstart", (e) => { e.preventDefault(); spin(); }, { passive:false });
 
-  // Init
   resizeConfetti();
   drawWheel();
 })();
