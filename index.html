@@ -3,574 +3,630 @@
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width,initial-scale=1" />
-  <title>Ruleta Coppel - Beneficios</title>
+  <title>Ruleta Coppel</title>
   <style>
     :root{
-      --blue:#0B4FB6;
-      --blue2:#0A3F93;
-      --yellow:#FFD400;
-      --white:#ffffff;
-      --gray:#f2f4f8;
-      --ink:#0b1b3a;
-      --shadow: 0 18px 45px rgba(10,31,68,.18);
-      --r: 26px;
+      --coppel-yellow:#FFD100;
+      --coppel-blue:#0B4DB3;
+      --ink:#0b1220;
+      --card:#ffffff;
+      --bg1:#0b1b3a;
+      --bg2:#061026;
     }
     *{box-sizing:border-box}
     body{
       margin:0;
-      font-family: system-ui,-apple-system,Segoe UI,Roboto,Arial,sans-serif;
+      font-family: ui-sans-serif, system-ui, -apple-system, Segoe UI, Roboto, Arial, "Noto Sans", "Helvetica Neue";
+      color:#fff;
       background:
-        radial-gradient(1200px 800px at 50% -120px, rgba(11,79,182,.20), transparent 55%),
-        linear-gradient(180deg,#eef3ff 0%, #f8fbff 65%, #ffffff 100%);
-      color:var(--ink);
+        radial-gradient(1000px 600px at 20% 10%, rgba(255,209,0,.25), transparent 60%),
+        radial-gradient(800px 500px at 80% 20%, rgba(11,77,179,.35), transparent 60%),
+        linear-gradient(180deg, var(--bg1), var(--bg2));
       min-height:100vh;
       display:flex;
       align-items:center;
       justify-content:center;
-      padding:18px 12px;
+      padding:22px;
     }
-
-    .wrap{ width:min(680px,96vw); display:flex; flex-direction:column; gap:14px; }
-
-    .hero{
-      background: linear-gradient(180deg,var(--blue) 0%, var(--blue2) 100%);
-      border-radius: 28px;
-      padding:18px 16px 14px;
-      box-shadow: var(--shadow);
-      color:#fff;
-      position:relative;
-      overflow:hidden;
+    .wrap{
+      width:min(980px, 100%);
+      display:grid;
+      grid-template-columns: 1.1fr .9fr;
+      gap:18px;
+      align-items:stretch;
     }
-    .hero:before{
-      content:"";
-      position:absolute; inset:-70px -90px auto -90px;
-      height:200px;
-      background: radial-gradient(circle at 30% 30%, rgba(255,212,0,.35), transparent 58%);
-      transform:rotate(-8deg);
+    @media (max-width: 900px){
+      .wrap{grid-template-columns:1fr; }
     }
-    .hero h1{
-      position:relative;
-      margin:0;
-      text-align:center;
-      font-size: clamp(20px, 4.8vw, 30px);
-      line-height:1.15;
-      font-weight: 950;
-    }
-    .pills{
-      position:relative;
-      margin:12px auto 0;
-      display:flex;
-      flex-wrap:wrap;
-      gap:10px;
-      justify-content:center;
-    }
-    .pill{
-      display:inline-flex; align-items:center; gap:10px;
-      padding:8px 14px;
-      border-radius:999px;
-      background: rgba(255,255,255,.14);
-      border:1px solid rgba(255,255,255,.24);
-      font-weight:850;
-      white-space:nowrap;
-    }
-    .dot{width:12px;height:12px;border-radius:50%;background:var(--yellow); box-shadow:0 0 0 6px rgba(255,212,0,.22);}
-    .pill small{opacity:.92; font-weight:800}
 
     .card{
-      background: var(--white);
-      border-radius: var(--r);
-      box-shadow: var(--shadow);
+      background: rgba(255,255,255,.08);
+      border: 1px solid rgba(255,255,255,.14);
+      box-shadow: 0 18px 60px rgba(0,0,0,.35);
+      border-radius: 22px;
       overflow:hidden;
       position:relative;
-    }
-    .card:before{
-      content:"";
-      position:absolute; inset:0;
-      background:
-        radial-gradient(circle at 14px 14px, rgba(11,79,182,.08) 0 2px, transparent 3px) 0 0/28px 28px,
-        radial-gradient(circle at 16px 16px, rgba(255,212,0,.10) 0 2px, transparent 3px) 10px 12px/34px 34px;
-      opacity:.55;
-      pointer-events:none;
+      backdrop-filter: blur(10px);
     }
 
-    .stage{
-      position:relative;
-      z-index:1;
-      padding:18px 14px 18px;
+    .header{
+      padding:18px 18px 10px;
       display:flex;
-      flex-direction:column;
       align-items:center;
+      justify-content:space-between;
       gap:12px;
     }
-
-    .pointer{
-      width:0;height:0;
-      border-left:18px solid transparent;
-      border-right:18px solid transparent;
-      border-top:28px solid var(--yellow);
-      filter: drop-shadow(0 6px 10px rgba(0,0,0,.18));
+    .brand{
+      display:flex; align-items:center; gap:12px;
+    }
+    .logo{
+      width:44px; height:44px;
+      border-radius:14px;
+      background: linear-gradient(135deg, var(--coppel-yellow), #ffea85);
+      display:grid; place-items:center;
+      box-shadow: 0 10px 25px rgba(255,209,0,.25);
+      border:1px solid rgba(255,255,255,.25);
+    }
+    .logo svg{width:26px;height:26px}
+    .title{
+      line-height:1.15;
+    }
+    .title h1{
+      margin:0;
+      font-size:18px;
+      letter-spacing:.2px;
+    }
+    .title p{
+      margin:4px 0 0;
+      font-size:12.5px;
+      opacity:.85;
     }
 
-    /* Wheel */
-    .wheelWrap{
-      width:min(560px, 92vw);
-      aspect-ratio:1/1;
+    .badge{
+      display:flex; gap:8px; flex-wrap:wrap;
+      justify-content:flex-end;
+    }
+    .pill{
+      font-size:12px;
+      padding:6px 10px;
+      border-radius:999px;
+      background: rgba(255,255,255,.12);
+      border:1px solid rgba(255,255,255,.18);
+      white-space:nowrap;
+    }
+    .pill strong{color:var(--coppel-yellow)}
+
+    .stage{
+      padding: 8px 18px 18px;
+      display:grid;
+      grid-template-columns: 1fr;
+      gap:14px;
+      align-items:center;
+      justify-items:center;
+    }
+
+    .wheel-area{
+      width:min(520px, 100%);
+      aspect-ratio:1 / 1;
       position:relative;
       display:grid;
       place-items:center;
     }
-
-    .outerRing{
-      position:absolute; inset:0;
-      border-radius:50%;
-      background:
-        radial-gradient(circle at 50% 50%, transparent 62%, rgba(255,212,0,.16) 63% 66%, transparent 67%),
-        conic-gradient(from 0deg, rgba(11,79,182,.24), rgba(255,212,0,.18), rgba(11,79,182,.24));
-      filter: drop-shadow(0 22px 30px rgba(10,31,68,.16));
-    }
-    .outerRing:after{
-      content:"";
-      position:absolute; inset:16px;
-      border-radius:50%;
-      border:14px solid var(--blue);
-      box-shadow: inset 0 0 0 8px rgba(255,255,255,.9);
-      background: radial-gradient(circle at 30% 30%, rgba(255,212,0,.14), transparent 60%);
-    }
-
-    .wheel{
-      position:relative;
-      width: calc(100% - 78px);
-      height: calc(100% - 78px);
-      border-radius:50%;
-      background:
-        conic-gradient(
-          from 0deg,
-          var(--blue) 0 60deg,
-          var(--gray) 60deg 120deg,
-          var(--yellow) 120deg 180deg,
-          var(--blue2) 180deg 240deg,
-          var(--yellow) 240deg 300deg,
-          var(--gray) 300deg 360deg
-        );
-      box-shadow: inset 0 0 0 10px rgba(255,255,255,.85);
-      transform: rotate(var(--rot, 0deg));
-      transition: transform 3.0s cubic-bezier(.12,.86,.16,1);
-      overflow:hidden;
-    }
-    .wheel:after{
-      content:"";
-      position:absolute; inset:0;
-      border-radius:50%;
-      background:
-        conic-gradient(
-          from 0deg,
-          rgba(10,31,68,.10) 0 1deg, transparent 1deg 60deg,
-          rgba(10,31,68,.10) 60deg 61deg, transparent 61deg 120deg,
-          rgba(10,31,68,.10) 120deg 121deg, transparent 121deg 180deg,
-          rgba(10,31,68,.10) 180deg 181deg, transparent 181deg 240deg,
-          rgba(10,31,68,.10) 240deg 241deg, transparent 241deg 300deg,
-          rgba(10,31,68,.10) 300deg 301deg, transparent 301deg 360deg
-        );
-      opacity:.55;
-      pointer-events:none;
-    }
-
-    /* Labels (correct position, horizontal, near rim) */
-    .labels{
-      position:absolute;
-      width: calc(100% - 78px);
-      height: calc(100% - 78px);
-      border-radius:50%;
-      pointer-events:none;
-      z-index:4;
-      /* radius of labels from center */
-      --rad: 36%;
-    }
-
-    .label{
-      position:absolute;
-      left:50%; top:50%;
-      width: min(84%, 360px);
-      transform:
-        translate(-50%,-50%)
-        rotate(var(--ang))
-        translate(0, calc(-1 * var(--rad)))
-        rotate(calc(-1 * var(--ang)));
-      display:flex;
-      justify-content:center;
-      text-align:center;
-      font-weight:950;
-      letter-spacing:.2px;
-      padding:10px 12px;
-      border-radius: 999px;
-      border: 2px solid rgba(10,31,68,.10);
-      box-shadow: 0 10px 18px rgba(10,31,68,.10);
-      line-height:1.05;
-      font-size: clamp(13px, 3.4vw, 18px);
-    }
-
-    /* readable backgrounds per slice */
-    .label.b{ background: rgba(255,255,255,.14); color:#fff; border-color: rgba(255,255,255,.22); }
-    .label.y{ background: rgba(255,255,255,.54); color: var(--blue2); }
-    .label.g{ background: rgba(11,79,182,.10); color: var(--blue2); }
-
-    /* Center spin button */
-    .centerBtn{
-      position:absolute;
-      width: 170px; height: 170px;
-      border-radius: 50%;
-      z-index:5;
-      border: 10px solid var(--blue);
-      background:
-        radial-gradient(circle at 30% 30%, rgba(255,255,255,.95), rgba(255,255,255,.55) 45%, rgba(255,212,0,.95) 70%, rgba(255,212,0,1) 100%);
-      box-shadow: 0 18px 28px rgba(10,31,68,.24), inset 0 0 0 8px rgba(255,255,255,.72);
-      display:flex; align-items:center; justify-content:center;
-      text-align:center;
-      padding:14px;
-      cursor:pointer;
-      user-select:none;
-      transition: transform .15s ease;
-    }
-    .centerBtn:active{ transform: scale(.98); }
-    .badge{
-      display:inline-flex;
-      align-items:center;
-      justify-content:center;
-      padding:8px 12px;
-      border-radius:999px;
-      background: rgba(255,255,255,.34);
-      border:1px solid rgba(10,31,68,.18);
-      font-weight:1000;
-      color: var(--blue2);
-      box-shadow: inset 0 1px 0 rgba(255,255,255,.65);
-      margin-bottom:10px;
-    }
-    .centerBtn strong{
-      display:block;
-      font-size: 28px;
-      line-height:1.0;
-      font-weight: 1000;
-      color: var(--blue2);
-    }
-    .centerBtn em{
-      display:block;
-      margin-top:6px;
-      font-style:normal;
-      font-weight: 900;
-      font-size: 16px;
-      color: rgba(10,31,68,.78);
-    }
-
-    .hint{
-      font-weight:800;
-      color: rgba(10,31,68,.55);
-      margin-top:2px;
-    }
-
-    .actions{
+    canvas{
       width:100%;
+      height:100%;
+      border-radius:999px;
+      background: radial-gradient(circle at 35% 30%, rgba(255,255,255,.12), rgba(255,255,255,.02) 55%, rgba(0,0,0,.25) 100%);
+      box-shadow: 0 22px 70px rgba(0,0,0,.45);
+      border: 1px solid rgba(255,255,255,.18);
+    }
+
+    /* Puntero */
+    .pointer{
+      position:absolute;
+      top:-8px;
+      left:50%;
+      transform:translateX(-50%);
+      width:0;height:0;
+      border-left:18px solid transparent;
+      border-right:18px solid transparent;
+      border-top:34px solid var(--coppel-yellow);
+      filter: drop-shadow(0 10px 12px rgba(0,0,0,.35));
+    }
+    .pointer::after{
+      content:"";
+      position:absolute;
+      left:-8px; top:-29px;
+      width:16px; height:16px;
+      border-radius:50%;
+      background: #fff;
+      border: 2px solid rgba(0,0,0,.18);
+    }
+
+    /* Centro */
+    .hub{
+      position:absolute;
+      inset:auto;
+      width: 34%;
+      aspect-ratio:1/1;
+      border-radius:999px;
+      background: radial-gradient(circle at 35% 30%, #ffffff, #f0f2ff 55%, #c9d2ff 100%);
+      border: 1px solid rgba(255,255,255,.6);
+      box-shadow: inset 0 6px 24px rgba(0,0,0,.15), 0 12px 40px rgba(0,0,0,.35);
+      display:grid;
+      place-items:center;
+      user-select:none;
+    }
+    .hub .hub-inner{
+      width:78%;
+      height:78%;
+      border-radius:999px;
+      background: radial-gradient(circle at 30% 30%, rgba(255,209,0,.95), rgba(11,77,179,.12) 55%, rgba(0,0,0,.12));
+      border: 1px solid rgba(0,0,0,.06);
+      display:grid;
+      place-items:center;
+      text-align:center;
+      padding:10px;
+    }
+    .hub .hub-inner .big{
+      font-weight:900;
+      color:#0b1b3a;
+      font-size:14px;
+      letter-spacing:.4px;
+    }
+    .hub .hub-inner .small{
+      margin-top:4px;
+      font-size:11px;
+      color:#0b1b3a;
+      opacity:.9;
+      font-weight:700;
+    }
+
+    .controls{
       display:flex;
-      justify-content:center;
       gap:10px;
       flex-wrap:wrap;
-      margin-top:6px;
+      justify-content:center;
+      width:100%;
     }
-    .btn{
+    button{
       appearance:none;
       border:none;
-      border-radius: 14px;
-      font-weight: 950;
-      padding: 12px 18px;
+      border-radius:16px;
+      padding:12px 14px;
+      font-weight:800;
       cursor:pointer;
+      transition: transform .06s ease, filter .2s ease, opacity .2s ease;
+      display:flex;
+      align-items:center;
+      gap:10px;
+      letter-spacing:.2px;
+      user-select:none;
+    }
+    button:active{transform: translateY(1px) scale(.99);}
+    .btn-primary{
+      background: linear-gradient(135deg, var(--coppel-yellow), #ffe98a);
+      color:#0b1b3a;
+      box-shadow: 0 16px 40px rgba(255,209,0,.25);
+    }
+    .btn-ghost{
+      background: rgba(255,255,255,.12);
+      color:#fff;
+      border: 1px solid rgba(255,255,255,.18);
+    }
+    .btn-primary[disabled],
+    .btn-ghost[disabled]{opacity:.55; cursor:not-allowed;}
+
+    .sidebar{
+      padding: 18px;
+      display:flex;
+      flex-direction:column;
+      gap:14px;
+    }
+    .panel{
+      background: rgba(255,255,255,.08);
+      border: 1px solid rgba(255,255,255,.14);
+      border-radius: 18px;
+      padding: 14px;
+    }
+    .panel h2{
+      margin:0 0 8px;
+      font-size:14px;
       letter-spacing:.2px;
     }
-    .btn.primary{
-      background: var(--yellow);
-      color: var(--blue2);
-      box-shadow: 0 12px 20px rgba(255,212,0,.25);
+    .panel p{
+      margin:0;
+      font-size:12.5px;
+      opacity:.86;
+      line-height:1.45;
     }
-    .btn.ghost{
-      background: rgba(11,79,182,.08);
-      color: var(--blue2);
-      border:1px solid rgba(11,79,182,.18);
-    }
-    .btn:disabled{ opacity:.55; cursor:not-allowed; }
 
-    /* MODAL result */
-    .modal{
-      position:fixed; inset:0;
-      display:none;
-      align-items:center;
-      justify-content:center;
-      padding:18px 12px;
-      z-index:9000;
-      background: rgba(5,15,35,.45);
-      backdrop-filter: blur(2px);
-    }
-    .modal.open{ display:flex; }
-
-    .ticket{
-      width: min(560px, 92vw);
-      background: linear-gradient(180deg, rgba(255,255,255,.92), rgba(255,255,255,.98));
-      border-radius: 18px;
-      border: 2px dashed rgba(11,79,182,.28);
-      box-shadow: 0 18px 36px rgba(10,31,68,.22);
-      padding: 14px 14px 12px;
-      position:relative;
-      overflow:hidden;
-      transform: translateY(10px) scale(.98);
-      opacity:0;
-      animation: pop .22s ease forwards;
-    }
-    @keyframes pop{
-      to{ transform: translateY(0) scale(1); opacity:1; }
-    }
-    .ticket:before{
-      content:"";
-      position:absolute; inset:0;
-      background:
-        radial-gradient(circle at 24px 24px, rgba(255,212,0,.14), transparent 45%),
-        radial-gradient(circle at 90% 0%, rgba(11,79,182,.12), transparent 55%);
-      pointer-events:none;
-    }
-    .ticketTop{
-      display:flex; align-items:center; justify-content:space-between;
+    .prizes{
+      margin-top:10px;
+      display:grid;
+      grid-template-columns: 1fr;
       gap:10px;
-      position:relative; z-index:1;
-      flex-wrap:wrap;
+    }
+    .prize{
+      display:flex;
+      gap:10px;
+      align-items:center;
+      padding:10px;
+      border-radius:16px;
+      background: rgba(0,0,0,.18);
+      border: 1px solid rgba(255,255,255,.12);
+    }
+    .ic{
+      width:38px; height:38px;
+      border-radius:14px;
+      display:grid;
+      place-items:center;
+      background: rgba(255,255,255,.10);
+      border: 1px solid rgba(255,255,255,.14);
+      flex: 0 0 auto;
+    }
+    .prize .txt{
+      display:flex;
+      flex-direction:column;
+      gap:2px;
+      min-width:0;
+    }
+    .prize .txt .name{
+      font-weight:800;
+      font-size:13px;
+      white-space:nowrap;
+      overflow:hidden;
+      text-overflow:ellipsis;
+    }
+    .prize .txt .tier{
+      font-size:11px;
+      opacity:.8;
     }
     .tag{
-      display:inline-flex; align-items:center; gap:10px;
-      padding:8px 12px;
+      display:inline-block;
+      padding:2px 8px;
       border-radius:999px;
-      background: rgba(11,79,182,.10);
-      border:1px solid rgba(11,79,182,.18);
-      font-weight: 1000;
-      color: var(--blue2);
-      white-space:nowrap;
+      font-size:10.5px;
+      font-weight:900;
+      letter-spacing:.3px;
+      margin-left:8px;
+      vertical-align:middle;
     }
-    .tag b{
-      background: var(--yellow);
-      color: var(--blue2);
-      padding:4px 10px;
-      border-radius:999px;
-    }
-    .ok{ font-weight:1000; color: rgba(10,31,68,.75); }
-    .prize{
-      margin-top:10px;
-      font-size: clamp(20px, 4.8vw, 30px);
-      font-weight: 1000;
-      color: var(--blue2);
-      position:relative; z-index:1;
-    }
-    .fine{
-      margin-top:4px;
-      font-size: 13px;
-      color: rgba(10,31,68,.62);
-      font-weight:800;
-      position:relative; z-index:1;
-    }
-    .modalBtns{
-      display:flex;
-      justify-content:flex-end;
-      gap:10px;
-      margin-top:12px;
-      position:relative; z-index:1;
-      flex-wrap:wrap;
-    }
+    .tag.gold{background: rgba(255,209,0,.22); color: #ffe98a; border:1px solid rgba(255,209,0,.35);}
+    .tag.blue{background: rgba(11,77,179,.22); color: #a9c5ff; border:1px solid rgba(169,197,255,.25);}
+    .tag.gray{background: rgba(255,255,255,.10); color: rgba(255,255,255,.85); border:1px solid rgba(255,255,255,.16);}
 
-    /* Confetti */
+    .result{
+      font-size:12.5px;
+      margin-top:10px;
+      padding:10px 12px;
+      border-radius:14px;
+      background: rgba(255,255,255,.10);
+      border:1px solid rgba(255,255,255,.16);
+      line-height:1.45;
+      min-height:44px;
+    }
+    .result strong{color: var(--coppel-yellow)}
+
+    /* Confetti layer */
     .confetti{
-      position: fixed;
+      position:fixed;
       inset:0;
       pointer-events:none;
       overflow:hidden;
-      z-index:9999;
-      display:none;
     }
-    .piece{
+    .confetti i{
       position:absolute;
-      top:-20px;
-      width:10px;height:14px;
-      border-radius:2px;
+      width:10px; height:14px;
+      border-radius: 3px;
       opacity:.95;
-      animation: fall 1.15s linear forwards;
+      transform: translateY(-40px) rotate(0deg);
+      animation: fall linear forwards;
+      box-shadow: 0 10px 18px rgba(0,0,0,.25);
     }
     @keyframes fall{
-      to{ transform: translateY(110vh) rotate(420deg); opacity:1; }
+      to{
+        transform: translateY(calc(100vh + 60px)) rotate(520deg);
+      }
+    }
+
+    /* Footer hint */
+    .hint{
+      font-size:11.5px;
+      opacity:.75;
+      margin-top:8px;
+    }
+    code.kbd{
+      background: rgba(0,0,0,.25);
+      border:1px solid rgba(255,255,255,.12);
+      padding:2px 6px;
+      border-radius:8px;
+      font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", monospace;
+      font-size:11px;
+      color:#fff;
     }
   </style>
 </head>
 <body>
+  <div class="confetti" id="confetti"></div>
+
   <div class="wrap">
-    <div class="hero">
-      <h1>Tu confianza se recompensa.<br>Gira y aprovecha en Coppel.</h1>
-      <div class="pills">
-        <div class="pill"><span class="dot"></span><span>Dinámica de beneficios</span><small>• Coppel</small></div>
-        <div class="pill"><small>Fácil • Rápido • Claro</small></div>
-      </div>
-    </div>
-
-    <div class="card">
-      <div class="stage">
-        <div class="pointer" aria-hidden="true"></div>
-
-        <div class="wheelWrap">
-          <div class="outerRing" aria-hidden="true"></div>
-          <div class="wheel" id="wheel"></div>
-
-          <div class="labels" aria-hidden="true">
-            <!-- angles are the CENTER of each slice: 30, 90, 150, 210, 270, 330 -->
-            <div class="label b" style="--ang:30deg">10% Dcto. Muebles y Ropa</div>
-            <div class="label g" style="--ang:90deg">10% Dcto. Óptica</div>
-            <div class="label y" style="--ang:150deg">10% Dcto. Muebles y Ropa</div>
-            <div class="label b" style="--ang:210deg">¡Doble oportunidad!</div>
-            <div class="label y" style="--ang:270deg">10% Dcto. en tu próxima visita</div>
-            <div class="label g" style="--ang:330deg">10% Dcto. Óptica</div>
+    <section class="card">
+      <div class="header">
+        <div class="brand">
+          <div class="logo" aria-hidden="true">
+            <!-- “Sol” simplificado tipo Coppel -->
+            <svg viewBox="0 0 64 64" fill="none">
+              <path d="M32 10l3.2 8.4 8.8-.6-7 5.4 2.6 8.5-7.6-4.7-7.6 4.7 2.6-8.5-7-5.4 8.8.6L32 10Z" fill="#0B4DB3"/>
+              <circle cx="32" cy="34" r="12" fill="#0B4DB3" opacity=".9"/>
+              <circle cx="32" cy="34" r="6.5" fill="#FFD100"/>
+            </svg>
           </div>
+          <div class="title">
+            <h1>Ruleta Coppel</h1>
+            <p>Gira y gana — versión creativa con íconos tipo sticker ✨</p>
+          </div>
+        </div>
+        <div class="badge">
+          <span class="pill">Premio <strong>Mayor</strong> 🏆</span>
+          <span class="pill">Premio <strong>Normal</strong> 🎁</span>
+          <span class="pill">Premio <strong>Básico</strong> ⭐</span>
+        </div>
+      </div>
 
-          <div class="centerBtn" id="centerSpin" role="button" aria-label="Girar ruleta">
-            <div>
-              <div class="badge">Coppel</div>
-              <strong>¡GIRA<br>AQUÍ!</strong>
-              <em>Toca para girar</em>
+      <div class="stage">
+        <div class="wheel-area">
+          <div class="pointer" aria-hidden="true"></div>
+          <canvas id="wheel" width="900" height="900" aria-label="Ruleta"></canvas>
+          <div class="hub" aria-hidden="true">
+            <div class="hub-inner">
+              <div class="big">GIRA</div>
+              <div class="small">y elige tu suerte</div>
             </div>
           </div>
         </div>
 
-        <div class="hint">Toca el centro para girar</div>
+        <div class="controls">
+          <button class="btn-primary" id="spinBtn">
+            <span aria-hidden="true">🎡</span> Girar
+          </button>
+          <button class="btn-ghost" id="shuffleBtn" title="Reordenar premios">
+            <span aria-hidden="true">🔀</span> Mezclar premios
+          </button>
+          <button class="btn-ghost" id="soundBtn" title="Activar/Desactivar sonido">
+            <span aria-hidden="true">🔊</span> Sonido
+          </button>
+        </div>
 
-        <div class="actions">
-          <button class="btn primary" id="spinBtn">Girar Ruleta</button>
-          <button class="btn ghost" id="resetBtn">Reiniciar</button>
+        <div class="result" id="result" role="status" aria-live="polite">
+          Dale a <strong>Girar</strong> y que caiga el premio 🔥
+        </div>
+
+        <div class="hint">
+          Tip: si quieres cambiar premios, edita el arreglo <code class="kbd">segments</code> en el script.
         </div>
       </div>
-    </div>
-  </div>
+    </section>
 
-  <!-- Modal result -->
-  <div class="modal" id="modal">
-    <div class="ticket" role="dialog" aria-modal="true" aria-label="Resultado">
-      <div class="ticketTop">
-        <div class="tag"><b>RESULTADO</b> Beneficio asignado</div>
-        <div class="ok">¡Felicidades!</div>
-      </div>
-      <div class="prize" id="prizeText">—</div>
-      <div class="fine">Presenta este beneficio en caja conforme a la dinámica.</div>
-      <div class="modalBtns">
-        <button class="btn ghost" id="closeModal">Cerrar</button>
-        <button class="btn primary" id="spinAgain">Girar otra vez</button>
-      </div>
-    </div>
-  </div>
+    <aside class="card">
+      <div class="sidebar">
+        <div class="panel">
+          <h2>Premios en la ruleta</h2>
+          <p>Los colores están alternados (azul/amarillo/gris) para que se vea más atractivo y parejo.</p>
 
-  <div class="confetti" id="confetti"></div>
+          <div class="prizes" id="prizeList"></div>
+        </div>
+
+        <div class="panel">
+          <h2>Personalización rápida</h2>
+          <p>
+            Puedes cambiar: texto, cantidad de secciones, probabilidades (si quieres),
+            y también reemplazar los íconos por imágenes reales (URLs) si lo deseas.
+          </p>
+          <p class="hint">
+            Si quieres que lo deje idéntico a tu estilo anterior (paleta exacta, premios, tamaño para TV, etc.),
+            dime cuántas secciones quieres y los premios exactos.
+          </p>
+        </div>
+      </div>
+    </aside>
+  </div>
 
   <script>
-    const prizes = [
-      "10% Dcto. Muebles y Ropa",
-      "10% Dcto. Óptica",
-      "10% Dcto. Muebles y Ropa",
-      "¡Doble oportunidad!",
-      "10% Dcto. en tu próxima visita",
-      "10% Dcto. Óptica",
+    // ====== Íconos tipo “sticker” (SVG) ======
+    // Los pintamos dentro del canvas como mini dibujos.
+    // (Si prefieres imágenes reales, puedo adaptar a cargar PNG/JPG también.)
+    const iconSvgs = {
+      trophy: `
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64">
+          <path d="M18 10h28v10c0 8-6 14-14 14S18 28 18 20V10Z" fill="#FFD100"/>
+          <path d="M24 34h16v8c0 4-3 7-8 7s-8-3-8-7v-8Z" fill="#0B4DB3" opacity=".9"/>
+          <path d="M22 52h20v6H22z" fill="#fff" opacity=".9"/>
+          <path d="M18 12H8v8c0 7 5 12 12 12" fill="none" stroke="#FFD100" stroke-width="4" stroke-linecap="round"/>
+          <path d="M46 12h10v8c0 7-5 12-12 12" fill="none" stroke="#FFD100" stroke-width="4" stroke-linecap="round"/>
+          <circle cx="32" cy="22" r="4" fill="#fff" opacity=".9"/>
+        </svg>
+      `,
+      gift: `
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64">
+          <path d="M10 26h44v28H10z" fill="#fff" opacity=".92"/>
+          <path d="M10 26h44v10H10z" fill="#FFD100"/>
+          <path d="M28 26h8v28h-8z" fill="#0B4DB3"/>
+          <path d="M22 22c0-6 6-8 10-2-1-8-12-6-10 2Z" fill="#0B4DB3" opacity=".9"/>
+          <path d="M42 22c0-6-6-8-10-2 1-8 12-6 10 2Z" fill="#0B4DB3" opacity=".9"/>
+          <path d="M10 26h44" stroke="#0b1220" stroke-opacity=".15" stroke-width="2"/>
+        </svg>
+      `,
+      cart: `
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64">
+          <path d="M10 14h8l5 28h26l6-20H22" fill="none" stroke="#fff" stroke-width="4" stroke-linecap="round" stroke-linejoin="round"/>
+          <circle cx="28" cy="50" r="4" fill="#FFD100"/>
+          <circle cx="46" cy="50" r="4" fill="#FFD100"/>
+          <path d="M24 30h28" stroke="#FFD100" stroke-width="4" stroke-linecap="round"/>
+        </svg>
+      `,
+      percent: `
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64">
+          <circle cx="20" cy="20" r="8" fill="#FFD100"/>
+          <circle cx="44" cy="44" r="8" fill="#FFD100"/>
+          <path d="M16 48 48 16" stroke="#fff" stroke-width="6" stroke-linecap="round"/>
+        </svg>
+      `,
+      star: `
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64">
+          <path d="M32 8l7 16 17 2-13 11 4 17-15-9-15 9 4-17L8 26l17-2 7-16Z" fill="#FFD100"/>
+          <path d="M32 16l4.5 10 11 1.2-8.4 7.2 2.5 11-9.6-5.8-9.6 5.8 2.5-11-8.4-7.2 11-1.2 4.5-10Z" fill="#0B4DB3" opacity=".25"/>
+        </svg>
+      `,
+      phone: `
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64">
+          <rect x="18" y="8" width="28" height="48" rx="6" fill="#fff" opacity=".92"/>
+          <rect x="22" y="14" width="20" height="30" rx="3" fill="#0B4DB3" opacity=".85"/>
+          <circle cx="32" cy="50" r="3" fill="#FFD100"/>
+        </svg>
+      `,
+      ticket: `
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64">
+          <path d="M10 22c4 0 6-2 6-6h32c0 4 2 6 6 6v20c-4 0-6 2-6 6H16c0-4-2-6-6-6V22Z" fill="#fff" opacity=".92"/>
+          <path d="M24 18v28" stroke="#FFD100" stroke-width="4" stroke-dasharray="6 6" stroke-linecap="round"/>
+          <path d="M30 26h18M30 34h14" stroke="#0B4DB3" stroke-width="4" stroke-linecap="round"/>
+        </svg>
+      `,
+    };
+
+    function svgToImage(svg, size=64){
+      const svg64 = btoa(unescape(encodeURIComponent(svg)));
+      const img = new Image();
+      img.width = size; img.height = size;
+      img.src = `data:image/svg+xml;base64,${svg64}`;
+      return img;
+    }
+
+    const icons = {};
+    for (const [k,v] of Object.entries(iconSvgs)) icons[k] = svgToImage(v);
+
+    // ====== Configuración de la ruleta ======
+    // Colores alternados para que no queden dos iguales juntos.
+    const palette = {
+      major: { fill: "#FFD100", stroke:"#ffe98a", text:"#0b1b3a" }, // premio mayor
+      normal:{ fill: "#0B4DB3", stroke:"#a9c5ff", text:"#ffffff" }, // premio normal
+      basic: { fill: "rgba(255,255,255,.14)", stroke:"rgba(255,255,255,.35)", text:"#ffffff" } // básico
+    };
+
+    let segments = [
+      { label: "Pantalla 43”", tier:"Mayor", icon:"trophy", colorKey:"major" },
+      { label: "Vale $300", tier:"Normal", icon:"ticket", colorKey:"normal" },
+      { label: "5% Descuento", tier:"Básico", icon:"percent", colorKey:"basic" },
+      { label: "Audífonos", tier:"Normal", icon:"gift", colorKey:"normal" },
+      { label: "Vale $100", tier:"Básico", icon:"ticket", colorKey:"basic" },
+      { label: "Smartphone", tier:"Mayor", icon:"phone", colorKey:"major" },
+      { label: "Compra Gratis*", tier:"Mayor", icon:"cart", colorKey:"major" },
+      { label: "Sticker Estrella", tier:"Básico", icon:"star", colorKey:"basic" },
+      { label: "Vale $200", tier:"Normal", icon:"ticket", colorKey:"normal" },
     ];
 
-    const wheel = document.getElementById("wheel");
-    const spinBtn = document.getElementById("spinBtn");
-    const resetBtn = document.getElementById("resetBtn");
-    const centerSpin = document.getElementById("centerSpin");
-
-    const modal = document.getElementById("modal");
-    const closeModal = document.getElementById("closeModal");
-    const spinAgain = document.getElementById("spinAgain");
-    const prizeText = document.getElementById("prizeText");
-
-    const confetti = document.getElementById("confetti");
-
-    let spinning = false;
-    let rotation = 0;
-
-    function doConfetti(){
-      confetti.innerHTML = "";
-      confetti.style.display = "block";
-      const colors = ["#0B4FB6","#0A3F93","#FFD400","#FFFFFF"];
-      const count = 120;
-
-      for(let i=0;i<count;i++){
-        const p = document.createElement("div");
-        p.className = "piece";
-        const size = 8 + Math.random()*8;
-        p.style.width = size + "px";
-        p.style.height = (size*1.2) + "px";
-        p.style.left = (Math.random()*100) + "vw";
-        p.style.background = colors[Math.floor(Math.random()*colors.length)];
-        p.style.animationDuration = (0.9 + Math.random()*0.9) + "s";
-        p.style.animationDelay = (Math.random()*0.12) + "s";
-        p.style.transform = `rotate(${Math.random()*180}deg)`;
-        confetti.appendChild(p);
+    // Para que se vea “alternado”: reordenamos por patrón mayor/normal/básico cuando sea posible.
+    function interleaveByTier(list){
+      const major = list.filter(s => s.colorKey === "major");
+      const normal = list.filter(s => s.colorKey === "normal");
+      const basic = list.filter(s => s.colorKey === "basic");
+      const out = [];
+      while (major.length || normal.length || basic.length){
+        if (normal.length) out.push(normal.shift());
+        if (basic.length) out.push(basic.shift());
+        if (major.length) out.push(major.shift());
       }
-      setTimeout(()=>{ confetti.style.display="none"; }, 1400);
+      return out;
+    }
+    segments = interleaveByTier(segments);
+
+    // ====== Canvas drawing ======
+    const canvas = document.getElementById("wheel");
+    const ctx = canvas.getContext("2d");
+    const resultEl = document.getElementById("result");
+    const prizeListEl = document.getElementById("prizeList");
+
+    // Animación
+    let angle = 0;           // ángulo actual
+    let angVel = 0;          // velocidad
+    let spinning = false;
+    let soundOn = true;
+
+    // Sonidos (muy ligeros, sin archivos externos)
+    const audioCtx = new (window.AudioContext || window.webkitAudioContext)();
+    function beep(freq=440, dur=0.06, type="sine", gain=0.035){
+      if (!soundOn) return;
+      const o = audioCtx.createOscillator();
+      const g = audioCtx.createGain();
+      o.type = type;
+      o.frequency.value = freq;
+      g.gain.value = gain;
+      o.connect(g); g.connect(audioCtx.destination);
+      o.start();
+      o.stop(audioCtx.currentTime + dur);
     }
 
-    function openModal(text){
-      prizeText.textContent = text;
-      modal.classList.add("open");
-      doConfetti();
-    }
-    function closeModalFn(){
-      modal.classList.remove("open");
-    }
+    function drawWheel(){
+      const w = canvas.width, h = canvas.height;
+      const cx = w/2, cy = h/2;
+      const radius = Math.min(cx, cy) * 0.92;
 
-    function spin(){
-      if(spinning) return;
-      spinning = true;
-      spinBtn.disabled = true;
-      closeModalFn();
+      ctx.clearRect(0,0,w,h);
 
-      const idx = Math.floor(Math.random() * prizes.length); // 0..5
-      const slice = 60;
-      const centerAngle = idx * slice + (slice/2); // 30, 90, ...
-      const desired = 360 - centerAngle;
+      // Aro externo brillante
+      ctx.beginPath();
+      ctx.arc(cx,cy,radius*1.03,0,Math.PI*2);
+      ctx.strokeStyle = "rgba(255,255,255,.22)";
+      ctx.lineWidth = radius*0.06;
+      ctx.stroke();
 
-      const currentMod = ((rotation % 360) + 360) % 360;
-      let delta = (desired - currentMod);
-      delta = ((delta % 360) + 360) % 360;
+      const N = segments.length;
+      const arc = (Math.PI*2)/N;
 
-      const turns = 6 + Math.floor(Math.random()*3); // 6-8 vueltas
-      rotation = rotation + turns*360 + delta;
+      for (let i=0;i<N;i++){
+        const seg = segments[i];
+        const theme = palette[seg.colorKey];
+        const start = angle + i*arc;
+        const end   = start + arc;
 
-      wheel.style.setProperty("--rot", rotation + "deg");
+        // Sector
+        ctx.beginPath();
+        ctx.moveTo(cx,cy);
+        ctx.arc(cx,cy,radius,start,end);
+        ctx.closePath();
+        ctx.fillStyle = theme.fill;
+        ctx.fill();
 
-      setTimeout(()=>{
-        openModal(prizes[idx]);
-        spinning = false;
-        spinBtn.disabled = false;
-      }, 3050);
-    }
+        ctx.strokeStyle = theme.stroke;
+        ctx.lineWidth = 6;
+        ctx.stroke();
 
-    function reset(){
-      rotation = 0;
-      wheel.style.setProperty("--rot", "0deg");
-      closeModalFn();
-    }
+        // Texto e ícono (rotados al sector)
+        ctx.save();
+        ctx.translate(cx,cy);
+        ctx.rotate(start + arc/2);
 
-    spinBtn.addEventListener("click", spin);
-    centerSpin.addEventListener("click", spin);
-    resetBtn.addEventListener("click", reset);
+        // Icono
+        const img = icons[seg.icon];
+        const iconSize = radius*0.16;
+        const iconX = radius*0.60;
+        const iconY = -iconSize/2;
 
-    closeModal.addEventListener("click", closeModalFn);
-    spinAgain.addEventListener("click", ()=>{
-      closeModalFn();
-      spin();
-    });
+        // Fondo redondito del ícono para estilo sticker
+        ctx.beginPath();
+        ctx.roundRect(iconX-10, iconY-10, iconSize+20, iconSize+20, 18);
+        ctx.fillStyle = "rgba(0,0,0,.18)";
+        ctx.fill();
 
-    // click outside ticket closes
-    modal.addEventListener("click", (e)=>{
-      if(e.target === modal) closeModalFn();
-    });
+        if (img && img.complete){
+          ctx.drawImage(img, iconX, iconY, iconSize, iconSize);
+        }
 
-    wheel.style.setProperty("--rot", "0deg");
-  </script>
-</body>
-</html>
+        // Texto
+        const maxWidth = radius*0.46;
+        ctx.fillStyle = theme.text;
+        ctx.font = `900 ${Math.floor(radius*0.06)}px ui-sans-serif, system-ui`;
+        ctx.textAlign = "left";
+        ctx.textBaseline = "middle";
+
+ 
